@@ -37,7 +37,7 @@ def create_ball(radius, pos):
     # use a pivot joint to add friction.
     pivot = pymunk.PivotJoint(static_body, body, (0, 0), (0, 0))
     pivot.max_bias = 0 
-    pivot.max_force = 100    # Emulate linear friction
+    pivot.max_force = 900    # Emulate linear friction
 
     space.add(body, shape, pivot)
     return shape
