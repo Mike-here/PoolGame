@@ -15,7 +15,15 @@ pygame.display.set_caption("The Real Pool Game")
 
 # Pymunk space.
 space = pymunk.Space()
+space.gravity = (0, 400)
 draw_options  = pymunk.pygame_util.DrawOptions(screen)
+
+# Clock.
+clock = pygame.time.Clock()
+fps = 120
+
+# Colours.
+background_color = (50, 50, 50)
 
 # Create a ball.
 def create_ball(radius, pos):
@@ -28,12 +36,18 @@ def create_ball(radius, pos):
     return shape
 
 
-created_ball = create_ball(25, (800, 400))
+created_ball = create_ball(25, (800, 50))
 
 
 # Game loop.
 run = True
 while run:
+
+    clock.tick(fps)
+    space.step(1 / fps)             #inverse
+
+    # Fill the background.
+    screen.fill(background_color)
 
     # Event handler.
     for event in pygame.event.get():
@@ -44,3 +58,4 @@ while run:
     pygame.display.update()        
             
 pygame.quit()
+sys.exit()
