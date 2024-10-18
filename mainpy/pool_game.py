@@ -6,8 +6,8 @@ import pymunk.pygame_util
 pygame.init()
 
 # Screen sizes.
-screen_width = 1200
-screen_height = 678
+screen_width = 1076
+screen_height = 608
 
 # Game window
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -26,7 +26,7 @@ fps = 120
 background_color = (100, 100, 150)
 
 # Load images
-pool_board = pygame.image.load("assets/table.png")
+pool_board = pygame.image.load("assets/table.png").convert_alpha()
 
 # Create a ball.
 def create_ball(radius, pos):
@@ -43,9 +43,25 @@ def create_ball(radius, pos):
     return shape
 
 
-first_ball = create_ball(25, (300, 200))
+first_ball = create_ball(25, (80, 100))
 cue_ball = create_ball(25, (800, 230))
 
+# Create pool board cushions.
+cushions = [
+    [(80, 50), (98, 68), (500, 68), (507.2, 50)],
+    [(555, 50), (565.2, 68), (976, 68), (990, 50)],
+]
+
+# Functions for creating cushions
+def create_cushion(poly_dims):
+    body = pymunk.Body(body_type = pymunk.Body.STATIC)
+    body.position = ((0, 0))
+    shape = pymunk.Poly(body, poly_dims)
+
+    space.add(body, shape)
+
+for c in cushions:
+    create_cushion(c)
 
 # Game loop.
 run = True
@@ -56,6 +72,9 @@ while run:
 
     # Fill the background.
     screen.fill(background_color)
+
+    # Draw the pool board.
+    screen.blit(pool_board, (0, 0))
 
     # Event handler.
     for event in pygame.event.get():
