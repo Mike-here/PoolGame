@@ -2,6 +2,7 @@ import pygame
 import sys
 import pymunk
 import pymunk.pygame_util
+import os
 
 pygame.init()
 
@@ -26,7 +27,7 @@ fps = 120
 background_color = (100, 100, 150)
 
 # Load images
-pool_board = pygame.image.load("assets/table.png")
+pool_board = pygame.image.load(os.path.join("table.png"))
 
 # Create a ball.
 def create_ball(radius, pos):
@@ -50,7 +51,7 @@ cue_ball = create_ball(25, (800, 230))
 cushions = [
     [(80, 50), (98, 68), (500, 68), (507.2, 50)],
     [(555, 50), (565.2, 68), (976, 68), (990, 50)],
-    [()]
+    
 ]
 
 # Functions for creating cushions
