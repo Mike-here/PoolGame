@@ -44,7 +44,7 @@ def create_ball(radius, pos):
     return shape
 
 
-first_ball = create_ball(25, (80, 100))
+first_ball = create_ball(25, (880, 100))
 cue_ball = create_ball(25, (800, 230))
 
 # Create pool board cushions.
@@ -53,7 +53,8 @@ cushions = [
     [(555, 50), (565.2, 68), (976, 68), (990, 50)],
     [(80, 558), (98, 540), (500, 540), (507.2, 558)],
     [(555, 558), (565.2, 540), (976, 540), (990, 558)],
-    []
+    [(50.3, 86), (68, 106.3), (68, 500), (50.3, 521)],
+    [(1025.7, 86), (1008, 106.3), (1008, 500), (1025.7, 521)]
 ]
 
 # Functions for creating cushions
