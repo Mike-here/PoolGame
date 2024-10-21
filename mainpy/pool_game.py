@@ -27,7 +27,7 @@ fps = 120
 background_color = (100, 100, 150)
 
 # Load images
-pool_board = pygame.image.load(os.path.join("table.png"))
+pool_board = pygame.image.load(os.path.join("assets/table.png"))
 
 # Create a ball.
 def create_ball(radius, pos):
@@ -51,7 +51,9 @@ cue_ball = create_ball(25, (800, 230))
 cushions = [
     [(80, 50), (98, 68), (500, 68), (507.2, 50)],
     [(555, 50), (565.2, 68), (976, 68), (990, 50)],
-    
+    [(80, 558), (98, 540), (500, 540), (507.2, 558)],
+    [(555, 558), (565.2, 540), (976, 540), (990, 558)],
+    []
 ]
 
 # Functions for creating cushions
