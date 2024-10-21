@@ -23,7 +23,7 @@ draw_options  = pymunk.pygame_util.DrawOptions(screen)
 clock = pygame.time.Clock()
 fps = 120
 
-diameter = 35.5
+diameter = 36
 
 # Colours.
 background_color = (100, 100, 150)
@@ -32,7 +32,7 @@ background_color = (100, 100, 150)
 pool_board = pygame.image.load(os.path.join("assets/table.png")).convert_alpha()
 ball_images =  []
 for i in range(1, 17):
-    ball_img = pygame.image.load(os.path.join("assets/ball_1.png")).convert_alpha()
+    ball_img = pygame.image.load(os.path.join(f"assets/ball_{i}.png")).convert_alpha()
     ball_images.append(ball_img)
 
 # Create a ball.
@@ -40,8 +40,8 @@ def create_ball(radius, pos):
     body = pymunk.Body()
     body.position = pos
     shape = pymunk.Circle(body, radius)
-    shape.mass = 15
-    shape.elasticity = 1
+    shape.mass = 20
+    shape.elasticity = 0.9
     # use a pivot joint to add friction.
     pivot = pymunk.PivotJoint(static_body, body, (0, 0), (0, 0))
     pivot.max_bias = 0 
@@ -56,7 +56,7 @@ rows = 5
 # Potting balls
 for col in range(5):
     for row in range(rows):
-        pos = (200 + (col * diameter), 220 + (row * diameter) + (col * diameter / 2))
+        pos = (200 + (col * ((diameter - 3))), 220 + (row * ((diameter - 3)) + (col * diameter / 2)))
         new_ball = create_ball(diameter / 2, pos)
         balls.append(new_ball)
     rows -= 1   
@@ -106,7 +106,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            cue_ball.body.apply_impulse_at_local_point((-1000, 0), (0, 0))   
+            cue_ball.body.apply_impulse_at_local_point((-3000, 0), (0, 0))   
 
     space.debug_draw(draw_options)
     pygame.display.update()        
