@@ -29,6 +29,7 @@ diameter = 36
 background_color = (100, 100, 150)
 
 # Load images
+cue_image = pygame.image.load(os.path.join("assets/cue.png")).convert_alpha()
 pool_board = pygame.image.load(os.path.join("assets/table.png")).convert_alpha()
 ball_images =  []
 for i in range(1, 17):
@@ -84,6 +85,20 @@ def create_cushion(poly_dims):
 for c in cushions:
     create_cushion(c)
 
+class Cue():
+    def __init__(self, pos):
+        self.original_image = cue_image
+        self.angle = 0
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.rect = self.image.get_rect()
+        self.rect.center = pos
+
+    def draw(self, surface):
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        surface.blit(self.image, self.rect)
+
+cue = Cue(balls[-1].body.position)            #instance for the cue and passed the position which is at the of the list "balls"
+
 # Game loop.
 run = True
 while run:
@@ -100,6 +115,9 @@ while run:
     # Draw ball images
     for i, ball in enumerate(balls):
         screen.blit(ball_images[i], (ball.body.position[0] - ball.radius, ball.body.position[1] - ball.radius))
+
+    # Draw the cue
+    cue.draw(screen)    
 
     # Event handler.
     for event in pygame.event.get():
