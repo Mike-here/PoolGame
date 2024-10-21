@@ -35,6 +35,7 @@ def create_ball(radius, pos):
     body.position = pos
     shape = pymunk.Circle(body, radius)
     shape.mass = 3
+    shape.elasticity = 0.75
     # use a pivot joint to add friction.
     pivot = pymunk.PivotJoint(static_body, body, (0, 0), (0, 0))
     pivot.max_bias = 0 
@@ -44,7 +45,7 @@ def create_ball(radius, pos):
     return shape
 
 
-first_ball = create_ball(25, (880, 100))
+first_ball = create_ball(25, (880, 230))
 cue_ball = create_ball(25, (800, 230))
 
 # Create pool board cushions.
@@ -62,7 +63,7 @@ def create_cushion(poly_dims):
     body = pymunk.Body(body_type = pymunk.Body.STATIC)
     body.position = ((0, 0))
     shape = pymunk.Poly(body, poly_dims)
-
+    shape.elasticity = 0.75
     space.add(body, shape)
 
 for c in cushions:
