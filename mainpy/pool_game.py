@@ -23,6 +23,8 @@ draw_options  = pymunk.pygame_util.DrawOptions(screen)
 clock = pygame.time.Clock()
 fps = 120
 
+diameter = 48
+
 # Colours.
 background_color = (100, 100, 150)
 
@@ -44,9 +46,17 @@ def create_ball(radius, pos):
     space.add(body, shape, pivot)
     return shape
 
-
-first_ball = create_ball(25, (880, 230))
-cue_ball = create_ball(25, (800, 230))
+# Game's setup
+balls = []
+rows = 5
+# Potting balls
+for col in range(5):
+    for row in range(rows):
+        pos = (200 + (col * diameter), 200 + (row * diameter) + (col * diameter / 2))
+        new_ball = create_ball(diameter / 2, pos)
+        balls.append(new_ball)
+    rows -= 1    
+cue_ball = create_ball(25, (800, screen_height / 2))
 
 # Create pool board cushions.
 cushions = [
