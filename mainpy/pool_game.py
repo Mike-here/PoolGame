@@ -99,7 +99,11 @@ class Cue():
 
     def draw(self, surface):
         self.image = pygame.transform.rotate(self.original_image, self.angle)
-        surface.blit(self.image, self.rect)
+        surface.blit(self.image, 
+          (self.rect.centerx - self.image.get_width() / 2,
+           self.rect.centery - self.image.get_height() / 2)           
+        )
+        
 
 cue = Cue(balls[-1].body.position)            #instance for the cue and passed the position which is at the of the list "balls"
 
@@ -134,7 +138,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            cue_ball.body.apply_impulse_at_local_point((-3000, 0), (0, 50))   
+            cue_ball.body.apply_impulse_at_local_point((-3000, 0), (0, 0))   
 
     #space.debug_draw(draw_options)
     pygame.display.update()        
