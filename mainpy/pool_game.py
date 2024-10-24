@@ -127,6 +127,7 @@ while run:
     # Draw the cue
     # Calculate the cue angle
     mouse_pos = pygame.mouse.get_pos()
+    cue.rect.center = balls[-1].body.position
     x_dist = balls[-1].body.position[0] - mouse_pos[0]
     y_dist = -(balls[-1].body.position[1] - mouse_pos[1])       # it is negative because pygame y coordinates increase down the screen
     cue_angle = math.degrees(math.atan2(y_dist, x_dist))
