@@ -27,6 +27,8 @@ fps = 120
 # Game variables
 diameter = 36
 force = 0
+max_force = 7000
+force_dir = 1
 taking_shots = True
 powering_up = False
 
@@ -148,13 +150,16 @@ while run:
 
     # Powering up pool cue
     if powering_up == True:
-        force += 100
+        force += 100 * force_dir
+        if force_dir >= max_force or force <= 0:
+            force_dir *= -1
         print(force)
     elif powering_up == False and taking_shots == True:    
         x_impulse = math.cos(math.radians(cue_angle))
         y_impulse = math.sin(math.radians(cue_angle))
         balls[-1].body.apply_impulse_at_local_point((force * -x_impulse, force * y_impulse), (0, 0))   
         force = 0
+        force_dir = 1
 
     # Event handler.
     for event in pygame.event.get():
