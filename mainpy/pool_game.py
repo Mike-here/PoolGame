@@ -26,8 +26,9 @@ fps = 120
 
 # Game variables
 diameter = 36
-force = 3000
+force = 0
 taking_shots = True
+powering_up = False
 
 # Colours.
 background_color = (100, 100, 150)
@@ -145,14 +146,25 @@ while run:
         cue.update(cue_angle)
         cue.draw(screen)    
 
+    # Powering up pool cue
+    if powering_up == True:
+        force += 100
+        print(force)
+    elif powering_up == False and taking_shots == True:    
+        x_impulse = math.cos(math.radians(cue_angle))
+        y_impulse = math.sin(math.radians(cue_angle))
+        balls[-1].body.apply_impulse_at_local_point((force * -x_impulse, force * y_impulse), (0, 0))   
+        force = 0
+
     # Event handler.
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            x_impulse = math.cos(math.radians(cue_angle))
-            y_impulse = math.sin(math.radians(cue_angle))
-            cue_ball.body.apply_impulse_at_local_point((force * -x_impulse, force * y_impulse), (0, 0))   
+        if event.type == pygame.MOUSEBUTTONDOWN and taking_shots == True:
+            powering_up = True
+        elif event.type == pygame.MOUSEBUTTONUP and taking_shots == True:
+            powering_up = False    
+
 
     #space.debug_draw(draw_options)
     pygame.display.update()        
