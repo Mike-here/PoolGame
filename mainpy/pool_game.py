@@ -24,7 +24,10 @@ draw_options  = pymunk.pygame_util.DrawOptions(screen)
 clock = pygame.time.Clock()
 fps = 120
 
+# Game variables
 diameter = 36
+force = 3000
+taking_shots = True
 
 # Colours.
 background_color = (100, 100, 150)
@@ -124,22 +127,32 @@ while run:
     for i, ball in enumerate(balls):
         screen.blit(ball_images[i], (ball.body.position[0] - ball.radius, ball.body.position[1] - ball.radius))
 
+    # Check if there is no movement of the balls
+    taking_shots = True
+    for ball in balls:
+        if ball.body.velocity[0] != 0 or ball.body.velocity[1] != 0:
+            taking_shots = False
+
+    
     # Draw the cue
-    # Calculate the cue angle
-    mouse_pos = pygame.mouse.get_pos()
-    cue.rect.center = balls[-1].body.position
-    x_dist = balls[-1].body.position[0] - mouse_pos[0]
-    y_dist = -(balls[-1].body.position[1] - mouse_pos[1])       # it is negative because pygame y coordinates increase down the screen
-    cue_angle = math.degrees(math.atan2(y_dist, x_dist))
-    cue.update(cue_angle)
-    cue.draw(screen)    
+    if taking_shots == True:
+        # Calculate the cue angle
+        mouse_pos = pygame.mouse.get_pos()
+        cue.rect.center = balls[-1].body.position
+        x_dist = balls[-1].body.position[0] - mouse_pos[0]
+        y_dist = -(balls[-1].body.position[1] - mouse_pos[1])       # it is negative because pygame y coordinates increase down the screen
+        cue_angle = math.degrees(math.atan2(y_dist, x_dist))
+        cue.update(cue_angle)
+        cue.draw(screen)    
 
     # Event handler.
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            cue_ball.body.apply_impulse_at_local_point((-3000, 0), (0, 0))   
+            x_impulse = math.cos(math.radians(cue_angle))
+            y_impulse = math.sin(math.radians(cue_angle))
+            cue_ball.body.apply_impulse_at_local_point((force * -x_impulse, force * y_impulse), (0, 0))   
 
     #space.debug_draw(draw_options)
     pygame.display.update()        
