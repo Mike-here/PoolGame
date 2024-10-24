@@ -113,6 +113,10 @@ class Cue():
 
 cue = Cue(balls[-1].body.position)            #instance for the cue and passed the position which is at the of the list "balls"
 
+# Create power bar
+power_bar = pygame.Surface((10, 20))
+power_bar.fill("red")
+
 # Game loop.
 run = True
 while run:
@@ -153,7 +157,13 @@ while run:
         force += 100 * force_dir
         if force_dir >= max_force or force <= 0:
             force_dir *= -1
-        print(force)
+        # Draw power bars
+        for bar in range(math.ceil(force / 3000)):
+            screen.blit(power_bar, 
+              (balls[-1].body.position[0] - 30 + (bar * 15),
+               balls[-1].body.position[1] + 30)          
+                        )
+
     elif powering_up == False and taking_shots == True:    
         x_impulse = math.cos(math.radians(cue_angle))
         y_impulse = math.sin(math.radians(cue_angle))
