@@ -3,6 +3,7 @@ import sys
 import pymunk
 import pymunk.pygame_util
 import os
+import math
 
 pygame.init()
 
@@ -93,6 +94,9 @@ class Cue():
         self.rect = self.image.get_rect()
         self.rect.center = pos
 
+    def update(self, angle):
+        self.angle = angle
+
     def draw(self, surface):
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         surface.blit(self.image, self.rect)
@@ -117,6 +121,12 @@ while run:
         screen.blit(ball_images[i], (ball.body.position[0] - ball.radius, ball.body.position[1] - ball.radius))
 
     # Draw the cue
+    # Calculate the cue angle
+    mouse_pos = pygame.mouse.get_pos()
+    x_dist = balls[-1].body.position[0] - mouse_pos[0]
+    y_dist = -(balls[-1].body.position[1] - mouse_pos[1])       # it is negative because pygame y coordinates increase down the screen
+    cue_angle = math.degrees(math.atan2(y_dist, x_dist))
+    cue.update(cue_angle)
     cue.draw(screen)    
 
     # Event handler.
@@ -124,9 +134,9 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            cue_ball.body.apply_impulse_at_local_point((-3000, 0), (0, 0))   
+            cue_ball.body.apply_impulse_at_local_point((-3000, 0), (0, 50))   
 
-    space.debug_draw(draw_options)
+    #space.debug_draw(draw_options)
     pygame.display.update()        
             
 pygame.quit()
