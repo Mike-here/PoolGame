@@ -181,7 +181,7 @@ while run:
             powering_up = False    
 
 
-    #space.debug_draw(draw_options)
+    space.debug_draw(draw_options)
     pygame.display.update()        
             
 pygame.quit()
